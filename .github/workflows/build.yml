@@ -61,13 +61,20 @@ jobs:
         with:
           path: artifacts
 
+      - name: Prepare Release Assets
+        run: |
+          mkdir -p release
+          cp artifacts/app-windows-latest/app.exe release/
+          cp artifacts/app-ubuntu-latest/app release/app-linux
+          cp artifacts/app-macos-latest/app release/app-macos
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            artifacts/app-windows-latest/app.exe
-            artifacts/app-ubuntu-latest/app
-            artifacts/app-macos-latest/app
+            release/app.exe
+            release/app-linux
+            release/app-macos
           generate_release_notes: true
