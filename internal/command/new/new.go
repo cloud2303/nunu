@@ -3,11 +3,12 @@ package new
 import (
 	"bytes"
 	"fmt"
-	"github.com/AlecAivazis/survey/v2"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
+
+	"github.com/AlecAivazis/survey/v2"
 
 	"github.com/go-nunu/nunu/config"
 	"github.com/go-nunu/nunu/internal/pkg/helper"
@@ -109,10 +110,10 @@ func (p *Project) cloneTemplate() (bool, error) {
 		prompt := &survey.Select{
 			Message: "Please select a layout:",
 			Options: []string{
-				"Advanced",
-				"Admin",
+				// "Advanced",
+				// "Admin",
 				"Basic",
-				"Chat",
+				// "Chat",
 			},
 			Description: func(value string, index int) string {
 				if index == 1 {
