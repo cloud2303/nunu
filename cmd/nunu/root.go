@@ -2,13 +2,13 @@ package nunu
 
 import (
 	"fmt"
-	"github.com/go-nunu/nunu/config"
-	"github.com/go-nunu/nunu/internal/command/wire"
+	"github.com/cloud2303/nunu/config"
+	"github.com/cloud2303/nunu/internal/command/wire"
 
-	"github.com/go-nunu/nunu/internal/command/create"
-	"github.com/go-nunu/nunu/internal/command/new"
-	"github.com/go-nunu/nunu/internal/command/run"
-	"github.com/go-nunu/nunu/internal/command/upgrade"
+	"github.com/cloud2303/nunu/internal/command/create"
+	"github.com/cloud2303/nunu/internal/command/new"
+	"github.com/cloud2303/nunu/internal/command/run"
+	"github.com/cloud2303/nunu/internal/command/upgrade"
 	"github.com/spf13/cobra"
 )
 

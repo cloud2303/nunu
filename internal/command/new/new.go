@@ -10,8 +10,8 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 
-	"github.com/go-nunu/nunu/config"
-	"github.com/go-nunu/nunu/internal/pkg/helper"
+	"github.com/cloud2303/nunu/config"
+	"github.com/cloud2303/nunu/internal/pkg/helper"
 	"github.com/spf13/cobra"
 )
 

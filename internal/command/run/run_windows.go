@@ -5,7 +5,7 @@ package run
 
 import (
 	"fmt"
-	"github.com/go-nunu/nunu/config"
+	"github.com/cloud2303/nunu/config"
 	"log"
 	"os"
 	"os/exec"
@@ -18,8 +18,8 @@ import (
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/cloud2303/nunu/internal/pkg/helper"
 	"github.com/fsnotify/fsnotify"
-	"github.com/go-nunu/nunu/internal/pkg/helper"
 	"github.com/spf13/cobra"
 )
 
