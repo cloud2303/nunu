@@ -2,14 +2,13 @@ package service
 
 import (
 	"{{ .ProjectName }}/api/v1"
-	"{{ .ProjectName }}/internal/model"
 	"{{ .ProjectName }}/internal/repository"
 	"context"
 )
 
 type {{ .StructName }}Service interface {
-	Get{{ .StructName }}(ctx context.Context, id string) (*model.{{ .StructName }}, error)
-	Create{{ .StructName }}(ctx context.Context) (*v1.Create{{ .StructName }}Response, error)
+	Get{{ .StructName }}(ctx context.Context, req *v1.Get{{ .StructName }}Request) (*v1.Get{{ .StructName }}Response, error)
+	Create{{ .StructName }}(ctx context.Context, req *v1.Create{{ .StructName }}Request) (*v1.Create{{ .StructName }}Response, error)
 	Update{{ .StructName }}(ctx context.Context, req *v1.Update{{ .StructName }}Request) (*v1.Update{{ .StructName }}Response, error)
 	Delete{{ .StructName }}(ctx context.Context, req *v1.Delete{{ .StructName }}Request) error
 	Get{{ .StructName }}List(ctx context.Context, req *v1.Get{{ .StructName }}sRequest) (*v1.Get{{ .StructName }}sResponse, error)
@@ -31,13 +30,13 @@ type {{ .StructNameLowerFirst }}Service struct {
 }
 
 // Get{{ .StructName }} 获取{{ .StructName }}详情
-func (s *{{ .StructNameLowerFirst }}Service) Get{{ .StructName }}(ctx context.Context, id string) (*model.{{ .StructName }}, error) {
-	return s.{{ .StructNameLowerFirst }}Repo.Get{{ .StructName }}(ctx, id)
+func (s *{{ .StructNameLowerFirst }}Service) Get{{ .StructName }}(ctx context.Context, req *v1.Get{{ .StructName }}Request) (*v1.Get{{ .StructName }}Response, error) {
+	return s.{{ .StructNameLowerFirst }}Repo.Get{{ .StructName }}(ctx, req)
 }
 
 // Create{{ .StructName }} 创建{{ .StructName }}
-func (s *{{ .StructNameLowerFirst }}Service) Create{{ .StructName }}(ctx context.Context) (*v1.Create{{ .StructName }}Response, error) {
-	return s.{{ .StructNameLowerFirst }}Repo.Create{{ .StructName }}(ctx)
+func (s *{{ .StructNameLowerFirst }}Service) Create{{ .StructName }}(ctx context.Context, req *v1.Create{{ .StructName }}Request) (*v1.Create{{ .StructName }}Response, error) {
+	return s.{{ .StructNameLowerFirst }}Repo.Create{{ .StructName }}(ctx, req)
 }
 
 // Update{{ .StructName }} 更新{{ .StructName }}

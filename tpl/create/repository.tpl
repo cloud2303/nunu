@@ -4,13 +4,14 @@ import (
 	"context"
 	"{{ .ProjectName }}/api/v1"
 	"{{ .ProjectName }}/ent"
+	"{{ .ProjectName }}/ent/{{ .StructNameLowerFirst }}"
 	"{{ .ProjectName }}/internal/model"
 	"errors"
 )
 
 type {{ .StructName }} interface {
-	Get{{ .StructName }}(ctx context.Context, id string) (*model.{{ .StructName }}, error)
-	Create{{ .StructName }}(ctx context.Context) (*v1.Create{{ .StructName }}Response, error)
+	Get{{ .StructName }}(ctx context.Context, req *v1.Get{{ .StructName }}Request) (*v1.Get{{ .StructName }}Response, error)
+	Create{{ .StructName }}(ctx context.Context, req *v1.Create{{ .StructName }}Request) (*v1.Create{{ .StructName }}Response, error)
 	Update{{ .StructName }}(ctx context.Context, req *v1.Update{{ .StructName }}Request) (*v1.Update{{ .StructName }}Response, error)
 	Delete{{ .StructName }}(ctx context.Context, req *v1.Delete{{ .StructName }}Request) error
 	Get{{ .StructName }}List(ctx context.Context, req *v1.Get{{ .StructName }}sRequest) (*v1.Get{{ .StructName }}sResponse, error)
@@ -27,10 +28,10 @@ type {{ .StructNameLowerFirst }} struct {
 }
 
 // Get{{ .StructName }} 获取{{ .StructName }}详情
-func (r *{{ .StructNameLowerFirst }}) Get{{ .StructName }}(ctx context.Context, id string) (*model.{{ .StructName }}, error) {
+func (r *{{ .StructNameLowerFirst }}) Get{{ .StructName }}(ctx context.Context, req *v1.Get{{ .StructName }}Request) (*v1.Get{{ .StructName }}Response, error) {
 	data, err := r.db.{{ .StructName }}.
 		Query().
-		Where({{ .StructNameLowerFirst }}.ID(id)).
+		Where({{ .StructNameLowerFirst }}.ID(req.ID)).
 		First(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -38,14 +39,15 @@ func (r *{{ .StructNameLowerFirst }}) Get{{ .StructName }}(ctx context.Context, 
 		}
 		return nil, err
 	}
-	return &model.{{ .StructName }}{
+	
+	return &v1.Get{{ .StructName }}Response{
 		ID: data.ID,
 		// 添加其他字段映射
 	}, nil
 }
 
 // Create{{ .StructName }} 创建{{ .StructName }}
-func (r *{{ .StructNameLowerFirst }}) Create{{ .StructName }}(ctx context.Context) (*v1.Create{{ .StructName }}Response, error) {
+func (r *{{ .StructNameLowerFirst }}) Create{{ .StructName }}(ctx context.Context, req *v1.Create{{ .StructName }}Request) (*v1.Create{{ .StructName }}Response, error) {
 	data, err := r.db.{{ .StructName }}.
 		Create().
 		// 设置创建字段
@@ -56,6 +58,7 @@ func (r *{{ .StructNameLowerFirst }}) Create{{ .StructName }}(ctx context.Contex
 		}
 		return nil, err
 	}
+	
 	return &v1.Create{{ .StructName }}Response{
 		ID: data.ID,
 		// 添加其他字段映射
@@ -74,6 +77,7 @@ func (r *{{ .StructNameLowerFirst }}) Update{{ .StructName }}(ctx context.Contex
 		}
 		return nil, err
 	}
+	
 	return &v1.Update{{ .StructName }}Response{
 		ID: data.ID,
 		// 添加其他字段映射
@@ -99,6 +103,7 @@ func (r *{{ .StructNameLowerFirst }}) Get{{ .StructName }}List(ctx context.Conte
 	// 查询全部数量
 	total, err := r.db.{{ .StructName }}.Query().Count(ctx)
 	if err != nil {
+		r.logger.Sugar().Error(err.Error())
 		return nil, err
 	}
 
@@ -109,6 +114,7 @@ func (r *{{ .StructNameLowerFirst }}) Get{{ .StructName }}List(ctx context.Conte
 		Order(ent.Desc({{ .StructNameLowerFirst }}.FieldCreateTime)).
 		All(ctx)
 	if err != nil {
+		r.logger.Sugar().Error(err.Error())
 		return nil, err
 	}
 
